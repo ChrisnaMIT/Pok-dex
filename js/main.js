@@ -1,33 +1,55 @@
-const boutonPoke = document.querySelector('.boutonPoke')
+const boutonPoke = document.querySelector('.boutonPokemon')
 const colonne =document.querySelector('.colonne')
+const choisisUnPokemon = document.querySelector('.pokemonName')
 
 
-boutonPoke.addEventListener('click', faitUneCartePoke);
+//boutonPoke.addEventListener('click',);
 console.log('test1')
 
-function faitUneCartePoke() {
-    fetch('https://pokebuildapi.fr/api/v1/pokemon')
+let header = {
+    'Content-Type': 'application/json'
+}
+
+let bodyEnJavaScript = {
+    name: "",              // PUT
+    body:"Il était une fois",
+    userId: 21
+}
+
+const namePokemon = document.querySelector('.namePokemon')
+const abilitiesNamePokemonOne =document.querySelector('.abilitiesNamePokemonOne')
+const abilitiesNamePokemonTwo =document.querySelector('.abilitiesNamePokemonTwo')
+const imagePokemon = document.querySelector('#imagePokemon')
+
+function choisisUnPokemonAleatoir(){
+
+
+}
+
+
+
+
+function recupereLesDonneesPokemon(){
+
+    const randomPoke = [Math.floor(Math.random() * 1010) + 1];
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/` + randomPoke)
         .then(res => res.json())
         .then(data => {
 
-            const randomPoke = data[Math.floor(Math.random() * data.length)]; // permet de choisir aléatoirement un pokemon
 
-            const cardPoke =
-                `
-            <div class="card" style="width: 18rem; height: 480px" >
-              <img src="${randomPoke.image}" class="card-img-top" alt=""> 
-              <div class="card-body">
-                <h5 class="card-title">${randomPoke.name}</h5>
-                <p class="card-text"></p>
-              </div>
-            </div>
+            console.log(data)
 
-                `;
-            colonne.innerHTML += faitUneCartePoke(); // permet de mettre à la suite les cartes quand j'appuie sur le bouton
+            namePokemon.innerHTML = data.name;
+            abilitiesNamePokemonOne.innerHTML = data.abilities[0].ability.name;
+            abilitiesNamePokemonTwo.innerHTML = data.abilities[1].ability.name;
+            imagePokemon.src = data.sprites.front_default;
+
+
         })
 
 }
-console.log('test2')
+recupereLesDonneesPokemon()
 
 
 
